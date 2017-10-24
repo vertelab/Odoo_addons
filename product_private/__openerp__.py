@@ -33,7 +33,8 @@ Add feature to have product blogs, visible only for certain security groups
     'author': 'Vertel AB',
     'depends': ['product'],
     'data': [
-        'views/product_private_views.xml'
+        'views/product_private_views.xml',
+        'security/product_security.xml'
     ],
     'demo': [
     ],
