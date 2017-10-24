@@ -7,22 +7,17 @@ import random
 
 from openerp import tools
 from openerp import SUPERUSER_ID
-from openerp.osv import osv, fields
 from openerp.tools.translate import _
+from openerp import models, fields, api, _
 
+import logging
+_logger = logging.getLogger(__name__)
 
-class Blog(osv.Model):
-    _name = 'blog.blog'
-    _description = 'Blogs'
+class Blog(models.Model):
     _inherit = 'blog.blog'
-    _columns = {
-        'security_type': fields.selection((('public','Public'),('private','Private')), 'Security type', required=True),
-        'group_ids': fields.many2many('res.groups', string="Authorized Groups"),
-    }
 
-    _defaults={
-        'security_type': 'public'
-    }
+    security_type = fields.Selection([('public','Public'),('private','Private')], string='Security type', default='public', required=True)
+    group_ids = fields.Many2many(comodel_name='res.groups', string="Authorized Groups")
 
     def all_tags(self, cr, uid, ids, min_limit=1, context=None):
         user=self.pool.get('res.users').browse(cr, uid, uid, context=context)
@@ -55,3 +50,9 @@ class Blog(osv.Model):
             tag_by_blog[blog_id] = tag_obj.browse(cr, uid, tag_by_blog[blog_id], context=context)
         return tag_by_blog
 
+
+class BlogPost(models.Model):
+    _inherit = 'blog.post'
+
+    security_type = fields.Selection([('public','Public'),('private','Private')], string='Security type', default='public', required=True)
+    group_ids = fields.Many2many('res.groups', string="Authorized Groups")
