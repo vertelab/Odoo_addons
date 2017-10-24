@@ -28,7 +28,7 @@
     'description': """
 Product Private
 ===============
-Add feature to have product blogs, visible only for certain security groups
+Add feature to product, visible only for certain security groups
         """,
     'author': 'Vertel AB',
     'depends': ['product'],
