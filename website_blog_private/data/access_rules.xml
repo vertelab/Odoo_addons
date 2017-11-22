@@ -14,23 +14,27 @@
                                 ('security_type','=','private'),
                                 ('group_ids','in',[g.id for g in user.groups_id])
                 ]</field>
-<!--            <field name="groups" eval="[(4, ref('base.group_public')), (4, ref('base.group_portal'))]"/>-->
         </record>
         <record model="ir.rule" id="website_blog_post_private">
             <field name="name">Blog Post: private, only visible for certain groups</field>
             <field name="model_id" ref="website_blog.model_blog_post"/>
             <field name="domain_force">[
-                '&amp;',
-                    ('website_published', '=', True),
-                    '|',
+                    '&amp;',
                         '|',
-                            ('blog_id.security_type','=','public'),
-                            ('blog_id.security_type','=',False),
+                            '|',
+                                ('blog_id.security_type', '=', 'public'),
+                                ('blog_id.security_type', '=', False),
                             '&amp;',
-                                ('blog_id.security_type','=','private'),
-                                ('blog_id.group_ids','in',[g.id for g in user.groups_id])
+                                ('blog_id.security_type', '=', 'private'),
+                                ('blog_id.group_ids', 'in', [g.id for g in user.groups_id]),
+                        '|',
+                            '|',
+                                ('security_type', '=', 'public'),
+                                ('security_type', '=', False),
+                            '&amp;',
+                                ('security_type', '=', 'private'),
+                                ('group_ids', 'in', [g.id for g in user.groups_id]),   
                 ]</field>
-<!--            <field name="groups" eval="[(4, ref('base.group_public')), (4, ref('base.group_portal'))]"/>-->
         </record>
 
     </data>
