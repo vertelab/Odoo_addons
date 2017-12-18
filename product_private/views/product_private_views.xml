@@ -24,5 +24,17 @@
             </field>
         </record>
 
+        <!-- res partner -->
+        <record id="view_partner_form" model="ir.ui.view">
+          <field name="name">res.partner.form.accessgroups</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form" />
+          <field name="arch" type="xml">
+            <field name="website" position="after">
+              <field name="access_group_ids" widget='many2many_tags' />
+            </field>
+          </field>
+        </record>
+
     </data>
 </openerp>
