@@ -11,6 +11,29 @@ class product_template(models.Model):
 
     access_group_ids = fields.Many2many(comodel_name='res.groups', string='Access Groups', help='Allowed groups to access this product')
 
+    #~ variant_access_group_ids = fields.Many2many(comodel_name='res.groups', compute='_get_variant_access_group_ids', stored=True, string='Variant Access Groups', help="Allowed groups to access this product's variants")
+    
+    #~ @api.one
+    #~ @api.depends('product_variant_ids.active', 'product_variant_ids.access_group_ids')
+    #~ def _get_variant_access_group_ids(self):
+        #~ groups = self.env['res.groups'].browse()
+        #~ #if not self.product_variant_ids:
+            #~ # What now? dummy group? boolean field? set active to false? entirely different solution?
+            #~ # Will this work?
+            #~ #self.active = False
+            #~ #self.variant_access_group_ids = groups
+
+            #~ # Do nothing for now. Write the rules to check product_variant_ids.active
+
+        #~ for variant in self.product_variant_ids:
+            #~ if not variant.access_group_ids:
+                #~ # One variant is accessible to everyone, so this template should be accessible to everyone.
+                #~ groups = None
+                #~ break
+            #~ else:
+                #~ groups |= variant.access_group_ids
+        #~ self.variant_access_group_ids = groups
+
     @api.multi
     def check_access_group(self,user):
         self.ensure_one()
