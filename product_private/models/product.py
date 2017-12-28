@@ -20,9 +20,9 @@ class product_template(models.Model):
             return True
 
     @api.model
-    def search_access_group(self,domain, limit=0, offset=0, order=''):
+    def search_access_group(self,domain, limit=100000, offset=0, order=''):
         access_group_ids = self.env['res.users'].sudo().browse(self.env.uid).commercial_partner_id.access_group_ids
-        return self.env['product.template'].search(domain, limit=limit, offset=offset, order=order).filtered(lambda p: not p.sudo().access_group_ids or access_group_ids & p.sudo().access_group_ids)
+        return self.env['product.template'].search(domain, order=order).filtered(lambda p: not p.sudo().access_group_ids or access_group_ids & p.sudo().access_group_ids)[offset:offset+limit]
 
     @api.model
     def browse_access_group(self,ids):
