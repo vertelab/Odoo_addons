@@ -12,7 +12,7 @@ class product_template(models.Model):
     access_group_ids = fields.Many2many(comodel_name='res.groups', string='Access Groups', help='Allowed groups to access this product')
 
     #~ variant_access_group_ids = fields.Many2many(comodel_name='res.groups', compute='_get_variant_access_group_ids', stored=True, string='Variant Access Groups', help="Allowed groups to access this product's variants")
-    
+
     #~ @api.one
     #~ @api.depends('product_variant_ids.active', 'product_variant_ids.access_group_ids')
     #~ def _get_variant_access_group_ids(self):
@@ -46,6 +46,15 @@ class product_template(models.Model):
     def search_access_group(self,domain, limit=100000, offset=0, order=''):
         access_group_ids = self.env['res.users'].sudo().browse(self.env.uid).commercial_partner_id.access_group_ids
         return self.env['product.template'].search(domain, order=order).filtered(lambda p: not p.sudo().access_group_ids or access_group_ids & p.sudo().access_group_ids)[offset:offset+limit]
+
+    @api.model
+    def search_read_access_group(self, domain, limit=100000, fields=['id', 'access_group_ids'], offset=0, order=''):
+        access_group_ids = self.env['res.users'].sudo().browse(self.env.uid).commercial_partner_id.access_group_ids
+        #~ return filter(lambda p: not p['access_group_ids'] or set(p['access_group_ids']).intersection(access_group_ids), self.env['product.template'].search_read(domain, fields=fields, order=order))[offset:offset+limit]
+        # TODO: implement sql
+        #~ SELECT array(select unnest(array['two', 'four', 'six']) intersect
+              #~ select unnest(array['four', 'six', 'eight']));
+        return self.env['product.template'].search_read(domain, limit=limit, offset=offset, fields=fields, order=order)
 
     @api.model
     def browse_access_group(self,ids):
