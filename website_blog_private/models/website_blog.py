@@ -56,3 +56,11 @@ class BlogPost(models.Model):
 
     security_type = fields.Selection([('public','Public'),('private','Private')], string='Security type', default='public', required=True)
     group_ids = fields.Many2many('res.groups', string="Authorized Groups")
+
+    @api.multi
+    def check_access_group(self, user):
+        self.ensure_one()
+        if self.sudo().security_type == 'public':
+            return True
+        else:
+            return True if len(user.sudo().commercial_partner_id.access_group_ids & self.sudo().group_ids) > 0 else False
