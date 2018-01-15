@@ -5,21 +5,25 @@
         <record id="rule_product_template" model="ir.rule">
             <field name="name">Product Template Groups Restriction</field>
             <field name="model_id" ref="product.model_product_template"/>
-            <field name="active" eval="False"/>
-            <field name="domain_force">[('product_variant_ids.active', '=', True), '|', '&amp;', ('access_group_ids', '=', False), ('variant_access_group_ids', '=', False), '&amp;', ('access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids]), ('product_variant_ids.access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids])]</field>
-<!--
-            <field name="perm_create" eval="False"/>
-            <field name="perm_unlink" eval="False"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_read" eval="False"/>
--->
+            <field name="domain_force">[('product_variant_ids.active', '=', True),
+  '&amp;',
+     '|',
+         ('access_group_ids', '=', False),
+         ('access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids]),
+     '|',
+         ('variant_access_group_ids', '=', False),
+         ('variant_access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids])]</field>
         </record>
 
         <record id="rule_product_product" model="ir.rule">
             <field name="name">Product Groups Restriction</field>
             <field name="model_id" ref="product.model_product_product"/>
-            <field name="active" eval="False"/>
-            <field name="domain_force">['|', ('access_group_ids', '=', False), ('access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids])]</field>
+            <field name="domain_force">['|',
+    ('access_group_ids', '=', False),
+    ('access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids]),
+'|',
+    ('product_tmpl_id.access_group_ids', '=', False),
+    ('product_tmpl_id.access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids])]</field>
         </record>
 
     </data>
