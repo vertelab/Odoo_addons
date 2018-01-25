@@ -24,5 +24,20 @@
                 </field>
             </field>
         </record>
+        
+        <template id="blog_authorization" name="Blog Authorization">
+            <div class="css_non_editable_mode_hidden">
+                <t t-if="blog_post.security_type == 'public'">
+                    <h3 class="text-success">Public</h3>
+                </t>
+                <t t-if="blog_post.security_type == 'private'">
+                    <h3 class="text-danger">Private</h3>
+                    <ul t-foreach="blog_post.group_ids" t-as="group">
+                        <li class="text-danger"><t t-esc="group.name"/></li>
+                    </ul>
+                </t>
+            </div>
+        </template>
+
     </data>
 </openerp>
