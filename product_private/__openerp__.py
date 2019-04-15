@@ -31,6 +31,7 @@ Product Private
 Add feature to product, visible only for certain security groups
         """,
     'author': 'Vertel AB',
+    'license': 'AGPL-3',
     'depends': ['product'],
     'data': [
         'views/product_private_views.xml',
