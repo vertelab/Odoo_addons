@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, fields, api, _
+from odoo import api, fields, models, tools, _
+from odoo.exceptions import ValidationError, UserError
+from odoo.addons.http_routing.models.ir_http import slug
+from odoo.addons.website.models import ir_http
+from odoo.tools.translate import html_translate
+from odoo.osv import expression
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -9,13 +14,14 @@ _logger = logging.getLogger(__name__)
 class product_template(models.Model):
     _inherit = 'product.template'
 
-    access_group_ids = fields.Many2many(comodel_name='res.groups', string='Access Groups', help='Allowed groups to access this product')
+    access_group_ids = fields.Many2many(comodel_name='res.groups', relation="access_group_rel", string='Access Groups', help='Allowed groups to access this product')
 
-    variant_access_group_ids = fields.Many2many(comodel_name='res.groups', compute='_get_variant_access_group_ids', store=True, string='Variant Access Groups', help="Allowed groups to access this product's variants")
+    variant_access_group_ids = fields.Many2many(comodel_name='res.groups', relation="variant_access_group_rel",compute='_get_variant_access_group_ids', store=True, string='Variant Access Groups', help="Allowed groups to access this product's variants")
 
-    @api.one
+    
     @api.depends('product_variant_ids.active', 'product_variant_ids.access_group_ids')
     def _get_variant_access_group_ids(self):
+        self.ensure_one()
         groups = self.env['res.groups'].browse()
         #if not self.product_variant_ids:
             # What now? dummy group? boolean field? set active to false? entirely different solution?
@@ -34,7 +40,7 @@ class product_template(models.Model):
                 groups |= variant.access_group_ids
         self.variant_access_group_ids = groups
 
-    @api.multi
+    @api.model_create_multi
     def check_access_group(self,user):
         self.ensure_one()
         if self.sudo().access_group_ids:
@@ -67,7 +73,7 @@ class product_product(models.Model):
 
     access_group_ids = fields.Many2many(comodel_name='res.groups', string='Access Groups', help='Allowed groups to access this product')
 
-    @api.multi
+    @api.model_create_multi
     def check_access_group(self,user):
         self.ensure_one()
         if self.sudo().access_group_ids:
@@ -89,4 +95,9 @@ class product_product(models.Model):
 class res_partner(models.Model):
     _inherit = "res.partner"
 
+    access_group_ids = fields.Many2many(comodel_name='res.groups', string='Access Groups', help='Allowed groups to access products in webshop')
+    
+class ProductPublicCategory(models.Model):
+    _inherit = "product.public.category"
+    
     access_group_ids = fields.Many2many(comodel_name='res.groups', string='Access Groups', help='Allowed groups to access products in webshop')

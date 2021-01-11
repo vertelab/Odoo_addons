@@ -32,7 +32,7 @@ Add feature to product, visible only for certain security groups
         """,
     'author': 'Vertel AB',
     'license': 'AGPL-3',
-    'depends': ['product'],
+    'depends': ['product','website_sale'],
     'data': [
         'views/product_private_views.xml',
         'security/product_security.xml'
