@@ -54,7 +54,7 @@
         
 
     </data>
-        <data>
+    <data>
 
         <record id="product_private.rule_product_template" model="ir.rule">
             <field name="name">Product Template Groups Restriction</field>
@@ -62,11 +62,11 @@
             <field name="domain_force">[('website_published', '=', True), ("sale_ok", "=", True), ('product_variant_ids.active', '=', True),
 '&amp;',
     '!', '&amp;',
-        ('access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id),
-        '!', ('access_group_ids', 'in', [user.env.ref('webshop_dermanord.group_dn_af').id, user.env.ref('webshop_dermanord.group_dn_ht').id, user.env.ref('webshop_dermanord.group_dn_spa').id]),
+        ('access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id),
+        '!', ('access_group_ids', 'in', [user.env.ref('product_private.group_dn_af').id, user.env.ref('product_private.group_dn_ht').id, user.env.ref('product_private.group_dn_spa').id]),
     '!', '&amp;',
-        ('variant_access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id),
-        '!', ('variant_access_group_ids', 'in', [user.env.ref('webshop_dermanord.group_dn_af').id, user.env.ref('webshop_dermanord.group_dn_ht').id, user.env.ref('webshop_dermanord.group_dn_spa').id])]</field>
+        ('variant_access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id),
+        '!', ('variant_access_group_ids', 'in', [user.env.ref('product_private.group_dn_af').id, user.env.ref('product_private.group_dn_ht').id, user.env.ref('product_private.group_dn_spa').id])]</field>
         </record>
 
         <record id="product_private.rule_product_product" model="ir.rule">
@@ -75,11 +75,11 @@
             <field name="domain_force">[('website_published', '=', True), ("sale_ok", "=", True), ('active', '=', True), ('product_tmpl_id.active', '=', True),
 '&amp;',
     '!', '&amp;',
-        ('access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id),
-        '!', ('access_group_ids', 'in', [user.env.ref('webshop_dermanord.group_dn_af').id, user.env.ref('webshop_dermanord.group_dn_ht').id, user.env.ref('webshop_dermanord.group_dn_spa').id]),
+        ('access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id),
+        '!', ('access_group_ids', 'in', [user.env.ref('product_private.group_dn_af').id, user.env.ref('product_private.group_dn_ht').id, user.env.ref('product_private.group_dn_spa').id]),
     '!',  '&amp;',
-        ('access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id),
-        '!', ('access_group_ids', 'in', [user.env.ref('webshop_dermanord.group_dn_af').id, user.env.ref('webshop_dermanord.group_dn_ht').id, user.env.ref('webshop_dermanord.group_dn_spa').id])]</field>
+        ('access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id),
+        '!', ('access_group_ids', 'in', [user.env.ref('product_private.group_dn_af').id, user.env.ref('product_private.group_dn_ht').id, user.env.ref('product_private.group_dn_spa').id])]</field>
         </record>
         
         <record id="rule_product_template_public" model="ir.rule">
@@ -90,10 +90,10 @@
   '&amp;',
      '|',
          ('access_group_ids', '=', False),
-         ('access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id),
+         ('access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id),
      '|',
          ('variant_access_group_ids', '=', False),
-         ('variant_access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id)]</field>
+         ('variant_access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id)]</field>
         </record>
         
         <record id="rule_product_product_public" model="ir.rule">
@@ -104,10 +104,10 @@
   '&amp;',
     '|',
        ('access_group_ids', '=', False),
-       ('access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id),
+       ('access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id),
     '|',
        ('product_tmpl_id.access_group_ids', '=', False),
-       ('product_tmpl_id.access_group_ids', '=', user.env.ref('webshop_dermanord.group_dn_sk').id)]</field>
+       ('product_tmpl_id.access_group_ids', '=', user.env.ref('product_private.group_dn_sk').id)]</field>
         </record>
 
         <record id="rule_product_category_public" model="ir.rule">
