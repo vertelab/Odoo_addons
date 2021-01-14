@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <data>
 
+<!--
         <record id="rule_product_template" model="ir.rule">
             <field name="name">Product Template Groups Restriction</field>
             <field name="model_id" ref="product.model_product_template"/>
@@ -25,6 +27,7 @@
     ('product_tmpl_id.access_group_ids', '=', False),
     ('product_tmpl_id.access_group_ids', 'in', [g.id for g in user.partner_id.commercial_partner_id.access_group_ids])]</field>
         </record>
+-->
         
         
         <record model="ir.module.category" id="module_category_dn_webshop">
@@ -54,6 +57,7 @@
         
 
     </data>
+<!--
     <data>
 
         <record id="product_private.rule_product_template" model="ir.rule">
@@ -122,4 +126,8 @@
         
         
     </data>
+-->
 </odoo>
+
+ 
+ 
